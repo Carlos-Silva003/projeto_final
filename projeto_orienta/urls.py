@@ -14,11 +14,29 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def custom_logout(request):
+    logout(request)  # Encerra a sessão do usuário
+    return redirect('login')
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
+    path('app_forms/', include('app_forms.urls')),
+#    path('chat/', include('app_chat.urls')),
+    path('', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('logout/', custom_logout, name='logout'),
+    path('app_tcc_workspace/', include('app_tcc_workspace.urls')),
+   
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

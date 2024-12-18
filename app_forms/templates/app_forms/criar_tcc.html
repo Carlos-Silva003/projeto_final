@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar TCC</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5f9;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #14004E;
+        }
+
+        .navbar {
+            background-color: rgba(20, 0, 78, 0.85) !important;
+            color: white;
+            z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #f7b700 !important;
+        }
+
+        .navbar-brand {
+            color: white !important;
+        }
+
+        .container {
+            margin-top: 100px;
+            background-color: #F4F5FA;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-btn {
+            background-color: #291b52 !important;
+            color: white !important;
+            border: none !important;
+            padding: 10px 20px !important;
+            font-size: 16px !important;
+            text-align: center !important;
+            display: inline-block !important;
+            cursor: pointer !important;
+        }
+
+        .custom-btn:hover {
+            background-color: #F7B700 !important;
+            color: white !important;
+        }
+
+        .form-wrapper {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .input {
+            margin-bottom: 15px;
+        }
+
+        .input label {
+            font-weight: bold;
+            color: 291b52;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .label {
+            color: #14004E !important;
+        }
+
+        .input input,
+        .input select,
+        .input textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .submit {
+            margin-top: 20px;
+        }
+
+        .submit button {
+            background-color: 291b52;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .submit button:hover {
+            background-color: #F7B700;
+        }
+
+        .file-upload-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .file-upload-btn {
+            background-color: #291b52;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .file-upload-btn:hover {
+            background-color: #F7B700;
+        }
+
+        .file-upload-input {
+            display: none;
+        }
+
+        .file-upload-name {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .file-upload-name:disabled {
+            background-color: #f1f1f1;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem;
+            }
+
+            .container {
+                margin-top: 60px;
+            }
+
+            .custom-btn {
+                font-size: 14px;
+            }
+
+            .form-wrapper {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Orienta</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="http://127.0.0.1:8000/app_forms/dashboard/">TCCs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Sair</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h3 class="page-title">Cadastrar Novo TCC</h3>
+
+        <div class="form-wrapper">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="top-wrapper">
+                    <div class="input">
+                        <label for="id_titulo">Título</label>
+                        {{ form.titulo }}
+                    </div>
+                    <div class="input">
+                        <label for="id_descricao">Descrição</label>
+                        {{ form.descricao }}
+                    </div>
+
+                    <!-- Capa do TCC -->
+                    <div class="input">
+                        <label for="id_capa">Capa do TCC</label>
+                        <div class="file-upload-wrapper">
+                            <!-- Botão de upload de arquivo -->
+                            <button type="button" class="file-upload-btn" onclick="document.getElementById('id_capa').click();">Procurar Arquivo</button>
+                            <input type="file" name="capa" id="id_capa" class="file-upload-input" onchange="displayFileName()"/>
+                            <input type="text" id="fileName" class="file-upload-name" placeholder="Nenhum arquivo selecionado" disabled/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-wrapper">
+                    <div class="input">
+                        <label for="id_autores">Autores</label>
+                        {{ form.autores }}
+                    </div>
+                    <div class="input">
+                        <label for="id_curso">Curso</label>
+                        {{ form.curso }}
+                    </div>
+                    <div class="input">
+                        <label for="id_data_inicio">Data de Início</label>
+                        {{ form.data_inicio }}
+                    </div>
+                    <div class="input">
+                        <label for="id_data_entrega">Data de Entrega</label>
+                        {{ form.data_entrega }}
+                    </div>
+
+                    <div class="submit">
+                        <button type="submit" class="submit-card custom-btn">Criar TCC</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Erro!</strong> Por favor, corrija os erros abaixo.
+        <ul>
+            {% for field, errors in form.errors.items %}
+                <li>{{ field }}: {{ errors }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+
+    <script>
+        // Função para exibir o nome do arquivo selecionado
+        function displayFileName() {
+            const fileInput = document.getElementById('id_capa');
+            const fileName = document.getElementById('fileName');
+            fileName.value = fileInput.files.length > 0 ? fileInput.files[0].name : 'Nenhum arquivo selecionado';
+        }
+    </script>
+
+</body>
+
+</html>

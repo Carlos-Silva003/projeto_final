@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Login - Meu Sistema de TCC{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5f9;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            min-height: 100vh;
+            justify-content: center; /* Centraliza o conteúdo verticalmente */
+            align-items: center; /* Centraliza o conteúdo horizontalmente */
+        }
+
+        .navbar {
+            background-color: rgba(20, 0, 78, 0.85) !important;
+            color: white;
+            z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #f7b700 !important;
+        }
+
+        .navbar-brand {
+            color: white !important;
+        }
+
+        .form-wrapper {
+            background-color: #F4F5FA;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px; /* Limita a largura do formulário */
+            margin: 0 auto;
+        }
+
+        .custom-btn {
+            background-color: #291b52 !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 20px !important;
+            font-size: 16px !important;
+            text-align: center !important;
+            display: inline-block !important;
+            cursor: pointer !important;
+            width: 100%;
+            border-radius: 5px !important;
+        }
+
+        .custom-btn:hover {
+            background-color: #F7B700 !important;
+            color: white !important;
+        }
+
+        .input {
+            margin-bottom: 15px;
+        }
+
+        .input label {
+            font-weight: bold;
+            color: #14004E;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input input {
+            width: 100% !important;
+            padding: 12px !important;
+            border: 1px solid #ccc !important;
+            border-radius: 30px !important;
+            font-size: 16px !important;
+            color: #333 !important;
+            box-sizing: border-box !important;
+        }
+
+        .submit {
+            margin-top: 20px;
+        }
+
+        .submit button {
+            background-color: #291b52 !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 20px !important;
+            font-size: 16px !important;
+            width: 100% !important;
+            cursor: pointer !important;
+            border-radius: 30px !important;
+        }
+
+        .submit button:hover {
+            background-color: #F7B700 !important;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem !important;
+            }
+
+            .form-wrapper {
+                padding: 20px !important;
+            }
+
+            .custom-btn {
+                font-size: 14px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Orienta</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            
+        </div>
+    </nav>
+
+    <div class="form-wrapper">
+        <h3 class="page-title text-center">Login</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="input">
+                <label for="id_username">Usuário</label>
+                {{ form.username }}
+            </div>
+            <div class="input">
+                <label for="id_password">Senha</label>
+                {{ form.password }}
+            </div>
+            <div class="submit">
+                <button type="submit" class="submit-card custom-btn">Entrar</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

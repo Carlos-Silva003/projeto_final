@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar TCC</title>
+    <!-- Incluindo o Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f5f5f9; /* Fundo da tela */
+            font-family: 'Arial', sans-serif;
+            height: 100vh; /* Garantir que o body ocupe toda a altura da tela */
+            margin: 0;
+            padding-top: 70px; /* Adicionando espaçamento para a navbar */
+        }
+
+        .navbar {
+            background-color: rgba(20, 0, 78, 0.85) !important;
+            color: white;
+            z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #f7b700 !important;
+        }
+
+        .navbar-brand {
+            color: white !important;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px; /* Limita a largura do formulário */
+            padding: 2rem;
+          
+            border-radius: 8px; /* Borda arredondada para o formulário */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombras para dar destaque */
+            margin-top: 2rem; /* Garantir espaçamento após a navbar */
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #28104E; /* Cor roxa */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .btn-custom {
+            background-color: #291b52; /* Cor do botão */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-custom:hover {
+            background-color: #f7b700; /* Cor do botão ao passar o mouse */
+        }
+
+        .cancel-link {
+            display: block;
+            margin-top: 1rem;
+            text-align: center;
+            color: #ff4d4d; /* Cor do link de cancelar */
+        }
+
+        .cancel-link:hover {
+            text-decoration: underline;
+        }
+
+        .input {
+            margin-bottom: 15px;
+        }
+
+        .input label {
+            font-weight: bold;
+            color: #291b52;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input input,
+        .input select,
+        .input textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Adicionando uma margem no topo para os campos */
+        .input textarea {
+            height: 150px !important; /* Aumentando a altura da textarea */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Orienta</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="http://127.0.0.1:8000/app_forms/dashboard/">TCCs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Sair</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="form-title">Editar TCC</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="input">
+                <label for="id_titulo">Título</label>
+                {{ form.titulo }}
+            </div>
+
+            <div class="input">
+                <label for="id_descricao">Descrição</label>
+                {{ form.descricao }}
+            </div>
+
+            <div class="input">
+                        <label for="id_capa">Capa do TCC</label>
+                        <div class="file-upload-wrapper">
+                        {{ form.capa }}
+                        </div>
+                    </div>
+
+            <div class="input">
+                <label for="id_autores">Autores</label>
+                {{ form.autores }}
+            </div>
+
+            <div class="input">
+                <label for="id_curso">Curso</label>
+                {{ form.curso }}
+            </div>
+
+            <div class="input">
+                <label for="id_data_inicio">Data de Início</label>
+                {{ form.data_inicio }}
+            </div>
+
+            <div class="input">
+                <label for="id_data_entrega">Data de Entrega</label>
+                {{ form.data_entrega }}
+            </div>
+
+            <button type="submit" class="btn-custom">Salvar</button>
+        </form>
+        <a href="{% url 'tcc' tcc.id %}" class="cancel-link">Cancelar</a>
+    </div>
+
+    <!-- Incluindo o Bootstrap JS e dependências -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

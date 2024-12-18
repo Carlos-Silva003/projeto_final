@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app_tcc',
+    'app_forms',
+    'app_mentor',
+    'app_tcc_workspace',
+    'channels',
+    'app_shared',
+    
 ]
 
 MIDDLEWARE = [
@@ -55,7 +62,9 @@ ROOT_URLCONF = 'projeto_orienta.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'app_forms', 'templates',
+                              BASE_DIR, 'app_mentor', 'templates',
+                              )],  # Verifique se esse caminho está correto
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,8 +77,19 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'projeto_orienta.wsgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  # Host e porta do Redis
+        },
+    },
+}
 
+
+
+WSGI_APPLICATION = 'projeto_orienta.wsgi.application'
+ASGI_APPLICATION = 'projeto_orienta.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -117,6 +137,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "/",
+]
+
+CHANNEL_AUTH_MIDDLEWARE_STACK = [
+    'channels.middleware.ProtocolTypeRouter',
+    'channels.auth.AuthMiddlewareStack',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -126,3 +154,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+LOGIN_REDIRECT_URL = '/app_forms/dashboard/'
+LOGOUT_REDIRECT_URL = '/'

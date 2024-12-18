@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientador</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function filterTCCs() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const status = card.querySelector('.status-text').innerText.toLowerCase();
+                if (status.includes(input)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</head>
+
+<style>
+    body {
+        background-color: #f5f5f9;
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        min-height: 100vh;
+    }
+
+    .navbar {
+        background-color: rgba(20, 0, 78, 0.85) !important;
+        color: white;
+        z-index: 10;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar .navbar-nav .nav-link {
+        color: white !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+        color: #f7b700 !important;
+    }
+
+    .navbar-brand {
+        color: white !important;
+    }
+
+    .container {
+        margin-top: 70px;
+        background-color: #F4F5FA;
+    }
+
+    .custom-btn {
+        background-color: #14004E !important;
+        color: white !important;
+        border: none !important;
+        padding: 10px 20px !important;
+        font-size: 16px !important;
+        text-align: center !important;
+        display: inline-block !important;
+        cursor: pointer !important;
+        border-radius: 25px !important;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .custom-btn:hover {
+        background-color: #F7B700 !important;
+        color: white !important;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    a, .btn, .nav-link {
+        text-decoration: none;
+    }
+
+    a:hover, .btn:hover, .nav-link:hover {
+        color: #2a1c54 !important;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 30px;
+    }
+
+    .card {
+        background-color: #F4F5FA !important;
+        border-radius: 10px;
+        max-width: 300px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img-top {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-body {
+        padding: 2.5rem;
+    }
+
+    .status-text {
+        color: #14004E !important;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .badge-status {
+        background-color: #28a745;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        color: #fff;
+        font-size: 14px;
+    }
+
+    /* Barra de busca arredondada */
+    .search-input {
+        width: 300px;
+        margin-right: 10px;
+        border-radius: 25px;
+        padding: 0.5rem 1rem;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ccc;
+        outline: none;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .search-input:focus {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 0.5rem;
+        }
+
+        .container {
+            margin-top: 60px;
+        }
+
+        .custom-btn {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h2>Orienta</h2>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="http://127.0.0.1:8000/app_forms/dashboard/">TCCs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}" class="nav-link">Sair</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h3>Bem-vindo, {{ request.user.username }}!</h3>
+        <p>Aqui estão os TCCs que você orienta</p>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="{% url 'criar_tcc' %}" class="btn custom-btn">Cadastrar TCC</a>
+            <input type="text" id="searchInput" class="form-control search-input" placeholder="Buscar TCC pelo Status" aria-label="Buscar TCC" onkeyup="filterTCCs()">
+        </div>
+
+        <div class="row">
+            {% for tcc in tccs %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ tcc.capa.url }}" class="card-img-top" alt="Capa do TCC" width="200" height="200">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ tcc.titulo }}</h6>
+                        <p class="card-text">Autores:
+                            {% for autor in tcc.autores.all %}
+                            {{ autor.user.get_full_name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p class="card-text">Data de Entrega: {{ tcc.data_entrega|date:"d/m/Y" }}</p>
+                        <p class="card-text status-text">Status: {{ tcc.get_status_display }}</p>
+                        <a href="{% url 'tcc' tcc.pk %}" class="btn custom-btn">Detalhes</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    Nenhum TCC cadastrado.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
